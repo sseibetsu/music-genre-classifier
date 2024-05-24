@@ -91,4 +91,6 @@ There are no LICENSE(yet), so feel free to use for your own aims.
 
 ---
 
-Feel free to customize this README as needed for your specific project details and instructions.
+Important info:
+   1. Dataset was taken from: https://www.kaggle.com/datasets/andradaolteanu/gtzan-dataset-music-genre-classification, feel free to use any music you want!
+   2. This work was done by IITU student to pass the exam.
