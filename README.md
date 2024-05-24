@@ -94,3 +94,7 @@ There are no LICENSE(yet), so feel free to use for your own aims.
 Important info:
    1. Dataset was taken from: https://www.kaggle.com/datasets/andradaolteanu/gtzan-dataset-music-genre-classification, feel free to use any music you want!
    2. This work was done by IITU student to pass the exam.
+
+
+Keywords:
+AI, ai, music, genre, music genre, classifier, predictor, music genre classifier, music genre predictor, genre predictor, ai for music genre predictions.
