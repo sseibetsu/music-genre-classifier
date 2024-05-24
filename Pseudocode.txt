@@ -1,0 +1,22 @@
+ENG:
+Load data
+Split data into training and test sets
+Create a neural network model
+Train the model on the training data
+Evaluate the model on the test data
+For each new audio file:
+    - Extract features
+    - Use the model to predict the genre
+    - Return the predicted genre
+
+
+RUS:
+Загрузить данные
+Разделить данные на обучающую и тестовую выборки
+Создать модель нейронной сети
+Обучить модель на обучающих данных
+Оценить модель на тестовых данных
+Для каждого нового аудиофайла:
+    - Извлечь признаки
+    - Применить модель для предсказания жанра
+    - Вернуть предсказанный жанр

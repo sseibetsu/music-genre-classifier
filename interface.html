@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Genre Classifier</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to bottom, #ff7f50, #800080);
+        }
+        .container {
+            text-align: center;
+        }
+        #fileInput {
+            display: none;
+        }
+        label, #submitBtn {
+            padding: 15px 30px;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            display: inline-block;
+            width: 250px;
+            text-align: center;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            margin: 10px 0;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+        }
+        label {
+            background-color: #ff7f50;
+        }
+        #submitBtn {
+            background-color: #28a745;
+            border: none;
+        }
+        label:hover, #submitBtn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+        label:active, #submitBtn:active {
+            transform: translateY(2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+         h1 {
+            color: white;
+        }
+        .file-name {
+            margin-top: 10px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #fff;
+            display: none;
+            font-weight: bold;
+        }
+        #modelSelect {
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 250px;
+        }
+        #predictionResult {
+            margin-top: 20px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Music Genre Classifier</h1>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <input type="file" id="fileInput" accept=".wav, .mp3" required>
+            <label for="fileInput">Select Audio File</label>
+            <div id="fileName" class="file-name"></div>
+            <select id="modelSelect" required>
+                <option value="cnn">CNN</option>
+                <option value="mlp">MLP</option>
+                <option value="rnn">RNN</option>
+            </select>
+            <button type="submit" id="submitBtn">Predict Genre</button>
+        </form>
+        <p id="predictionResult"></p>
+    </div>
+
+    <script>
+        const form = document.getElementById('uploadForm');
+        const fileInput = document.getElementById('fileInput');
+        const predictionResult = document.getElementById('predictionResult');
+        const fileNameDisplay = document.getElementById('fileName');
+        const modelSelect = document.getElementById('modelSelect');
+
+        fileInput.addEventListener('change', () => {
+            const fileName = fileInput.files[0].name;
+            fileNameDisplay.textContent = fileName;
+            fileNameDisplay.style.display = 'inline-block';
+        });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData();
+            formData.append('audio', fileInput.files[0]);
+            formData.append('model_type', modelSelect.value);
+
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+                const predictions = Object.entries(data.prediction)
+                    .filter(([genre, probability]) => probability > 0)
+                    .map(([genre, probability]) => `${genre}: ${probability}%`)
+                    .join('<br>');
+
+                predictionResult.innerHTML = `Predicted Genre:<br>${predictions}`;
+            } catch (error) {
+                console.error('Error predicting genre:', error);
+            }
+        });
+    </script>
+</body>
+</html>
